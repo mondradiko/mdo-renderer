@@ -18,6 +18,22 @@ endif ()
 # dependencies
 find_package (mdo-utils CONFIG REQUIRED)
 
+include (FindVulkan)
+if (NOT Vulkan_FOUND)
+  message (FATAL_ERROR "Vulkan not found.")
+endif ()
+
+# setup library
+include (mondradiko_setup_library)
+mondradiko_setup_library (mdo-renderer MDO_RENDERER_OBJ
+  src/gpu_instance.c
+)
+
+target_link_libraries (${MDO_RENDERER_OBJ} PUBLIC
+  mondradiko::mdo-utils
+  Vulkan::Vulkan
+)
+
 # tests
 if (ENABLE_TESTS)
   enable_testing ()
