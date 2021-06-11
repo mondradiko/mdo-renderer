@@ -23,6 +23,9 @@ if (NOT Vulkan_FOUND)
   message (FATAL_ERROR "Vulkan not found.")
 endif ()
 
+# shaders
+add_subdirectory (shaders)
+
 # setup library
 include (mondradiko_setup_library)
 mondradiko_setup_library (mdo-renderer MDO_RENDERER_OBJ
