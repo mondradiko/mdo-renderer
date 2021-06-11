@@ -5,24 +5,39 @@
 
 #pragma once
 
+#include <stdint.h> /* for uint32_t */
+
 #include <vulkan/vulkan.h>
 
 #include "mdo-utils/allocator.h"
 #include "mdo-utils/result.h"
 
 /** @typedef mdo_gpu_instance_t
-  An object to create, destroy, and interface with all Vulkan instance state.
+  An object to create, destroy, and interface with all "singleton"
+  Vulkan state, including the Vulkan instance, physical device, and logical
+  device.
  */
 typedef struct mdo_gpu_instance_s mdo_gpu_instance_t;
+
+/** @typedef mdo_gpu_requirements_t
+ */
+typedef struct mdo_gpu_requirements_s
+{
+  uint32_t min_api_version;
+  uint32_t max_api_version;
+  int request_validation;
+} mdo_gpu_requirements_t;
 
 /** @function mdo_gpu_instance_create
   @brief Creates a GPU instance.
   @param instance The new #mdo_gpu_instance_t.
   @param alloc The allocator to use.
+  @param requirements See #mdo_gpu_requirements_t.
   @return #mdo_result_t.
  */
 mdo_result_t mdo_gpu_instance_create (mdo_gpu_instance_t **,
-                                      const mdo_allocator_t *);
+                                      const mdo_allocator_t *,
+                                      const mdo_gpu_requirements_t *);
 
 /** @function mdo_gpu_instance_delete
   @brief Deletes a GPU instance.

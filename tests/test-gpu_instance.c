@@ -11,8 +11,15 @@ setup (void **state)
 {
   const mdo_allocator_t *alloc = mdo_default_allocator ();
 
+  mdo_gpu_requirements_t requirements = {
+    .min_api_version = VK_API_VERSION_1_0,
+    .max_api_version = VK_API_VERSION_1_2,
+  };
+
   mdo_gpu_instance_t *instance;
-  mdo_result_t result = mdo_gpu_instance_create (&instance, alloc);
+  mdo_result_t result
+      = mdo_gpu_instance_create (&instance, alloc, &requirements);
+
   if (!mdo_result_success (result))
     {
       return -1;
